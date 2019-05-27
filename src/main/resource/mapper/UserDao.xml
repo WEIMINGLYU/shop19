@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="com.ai.dao.IUserDao">
+    <!-- 注册页通过AJAX查数据库重复名字-->
+    <select id="registerByName" resultType="User" parameterType="String">
+        SELECT * FROM user WHERE username = #{username}
+    </select>
+    <!--注册页添加用户-->
+    <insert id="addUserDao" parameterType="user">
+        insert into user values(default,#{username},#{password},#{name},#{email},#{phone},#{addr},1,default)
+    </insert>
+    <!--登录页验证-->
+    <select id="findUserByNameAndPass" parameterType="user" resultType="user">
+
+        select  * from user WHERE username = #{username} AND password = #{password} limit 1
+    </select>
+
+    <!--个人信息页面修改-->
+    <update id="updateUser" parameterType="user" >
+        update  user set name = #{name}, addr = #{addr}, phone = #{phone}, email = #{email}, password = #{password} where uid = #{uid}
+    </update>
+</mapper>
